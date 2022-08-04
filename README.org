@@ -1,0 +1,1 @@
+Tour application implemented in order to learn react. It is based on [[https://youtu.be/a_7Z7C_JCyo?t=1181][this tutorial]].
