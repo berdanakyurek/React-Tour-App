@@ -1,40 +1,67 @@
+// react router
+// react redux
+
+
 import Tour from "./Tour.js";
 import {useEffect, useState, setTotalReactPackages} from 'react';
 
 const apiUrl= 'https://course-api.com/react-tours-project'
 
-function fetchTourInfo(){
-    fetch(apiUrl)
-        .then((response) => response.json())
-        .then((responseData) => {
-            return responseData;
-        })
-}
+
 
 function TourList() {
     const [tours, setTours] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    function fetchTourInfo(){
+    fetch(apiUrl)
+        .then((response) => response.json())
+        .then((responseData) => {
+            //console.log(responseData)
+            setTours(responseData)
+            return responseData;
+        })
+    }
+
     useEffect(() => {
-        const resp = fetchTourInfo()
-        console.log(resp)
-        setTours(resp)
+        fetchTourInfo()
         setLoading(false)
     }, []);
 
-    //console.log(tours)
-
-    if(loading || tours == null){
-        return (<div>Loading</div>);
+    function removeTour(toRemove){
+        var newTours = []
+        for(var i = 0; i < tours.length; i++){
+            if(tours[i].id != toRemove){
+                newTours.push(tours[i])
+            }
+        }
+        setTours(newTours)
     }
-    else{
+
+    function ListComponent(){
         return(
-            tours.map(todo => {
-                return <Tour/>
+            tours.map(t => {
+                if(t != null){
+                }
+                return <Tour id={t.id} name={t.name} info={t.info} image={t.image} price={t.price} removeTour={removeTour} />
             })
         )
     }
 
+
+    const l = <ListComponent/>
+    if(loading){
+        return (<h1 style={{ fontSize: "15rem" }}>Loading</h1>);
+    }
+    else if(tours.length != 0){
+        console.log(l)
+        return l
+    }
+    else{
+        return(
+            <h1>No Tours Left</h1>
+        )
+    }
 }
 
 export default TourList;

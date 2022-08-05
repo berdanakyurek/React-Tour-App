@@ -1,9 +1,19 @@
 import React from "react";
 import TourList from "./TourList.js";
+import Button from '@mui/material/Button';
+
 
 function App() {
+
+    function refresh(){
+        window.location.reload(false);
+    }
+
     return (
-        <TourList/>
+        <div>
+            <TourList/>
+            <Button variant="contained" onClick ={refresh}>Refresh</Button>
+        </div>
     );
 }
 
